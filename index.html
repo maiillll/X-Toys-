@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>XToys — Showroom & Marketplace Mobil, Moge & Motor Sport</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- NAVBAR -->
+  <header class="sticky top-0 z-40 bg-slate-950 text-white border-b border-slate-800 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 gap-3">
+        <!-- Logo XToys -->
+        <a href="#" onclick="showHome(); return false;" class="flex items-center gap-2.5 shrink-0 group">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center font-extrabold text-xl text-slate-950 shadow-lg shadow-amber-500/20 group-hover:scale-105 transition">
+            X
+          </div>
+          <div>
+            <span class="text-xl font-extrabold tracking-tight text-white">X<span class="text-amber-400">Toys</span></span>
+            <p class="text-[10px] uppercase tracking-widest text-slate-400 -mt-1 hidden sm:block">Premium Garage</p>
+          </div>
+        </a>
+
+        <!-- Search Bar Desktop -->
+        <div class="hidden md:flex flex-1 max-w-xl mx-4">
+          <div class="relative w-full">
+            <input
+              type="text"
+              id="desktopSearch"
+              oninput="handleSearch(this.value)"
+              placeholder="Cari mobil, Harley Davidson, Ducati, R1M, Porsche..."
+              class="w-full bg-slate-900 text-sm text-white placeholder-slate-400 border border-slate-700 rounded-xl pl-10 pr-4 py-2.5 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition"
+            />
+            <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <button
+            onclick="openManageModal()"
+            class="flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm font-semibold px-3 sm:px-3.5 py-2 rounded-xl border border-slate-700 transition"
+          >
+            <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+            </svg>
+            <span>Kelola Unit</span>
+            <span id="totalBadge" class="bg-slate-700 text-amber-400 text-xs px-1.5 py-0.5 rounded-md font-bold">0</span>
+          </button>
+
+          <button
+            onclick="openFormModal()"
+            class="flex items-center gap-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs sm:text-sm font-bold px-3 sm:px-4 py-2 rounded-xl shadow-lg shadow-amber-500/20 transition"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
+            </svg>
+            <span>+ Tambah Unit</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Search Bar -->
+      <div class="pb-3 md:hidden">
+        <div class="relative w-full">
+          <input
+            type="text"
+            id="mobileSearch"
+            oninput="handleSearch(this.value)"
+            placeholder="Cari unit mobil, Harley, motor sport..."
+            class="w-full bg-slate-900 text-sm text-white placeholder-slate-400 border border-slate-700 rounded-xl pl-10 pr-4 py-2 focus:outline-none focus:border-amber-500"
+          />
+          <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== VIEW 1: HALAMAN UTAMA (KATALOG) ==================== -->
+  <main id="homeView" class="flex-1">
+    <!-- Hero Banner -->
+    <section class="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 text-white border-b border-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div class="max-w-2xl">
+            <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider bg-amber-500/15 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-full mb-3">
+              <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+              Showroom Pilihan Mobil & Big Bike
+            </span>
+            <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+              Temukan Mobil Impian, Moge & Motor Sport di <span class="text-amber-400">XToys</span>
+            </h1>
+            <p class="text-slate-300 text-sm sm:text-base mt-2.5 leading-relaxed">
+              Koleksi unit terkurasi dengan riwayat jelas, surat lengkap, dan inspeksi menyeluruh. Mulai dari mobil harian hingga Harley-Davidson & superbike siap gas.
+            </p>
+          </div>
+          <div class="grid grid-cols-3 gap-3 sm:gap-4 shrink-0 bg-slate-900/80 border border-slate-700/80 p-4 rounded-2xl">
+            <div class="text-center px-2">
+              <p id="statTotal" class="text-xl sm:text-2xl font-extrabold text-white">0</p>
+              <p class="text-[11px] text-slate-400 mt-0.5">Total Unit</p>
+            </div>
+            <div class="text-center px-2 border-x border-slate-700">
+              <p id="statReady" class="text-xl sm:text-2xl font-extrabold text-emerald-400">0</p>
+              <p class="text-[11px] text-slate-400 mt-0.5">Ready Stock</p>
+            </div>
+            <div class="text-center px-2">
+              <p id="statSold" class="text-xl sm:text-2xl font-extrabold text-rose-400">0</p>
+              <p class="text-[11px] text-slate-400 mt-0.5">Sold Out</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filter & Category Bar -->
+    <section class="sticky top-16 z-30 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+          <!-- Category Pills -->
+          <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1 lg:pb-0">
+            <button onclick="setCategory('all')" data-cat="all" class="cat-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition bg-slate-900 text-white">
+              Semua Unit
+            </button>
+            <button onclick="setCategory('Mobil')" data-cat="Mobil" class="cat-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition bg-slate-100 text-slate-700 hover:bg-slate-200">
+              🚗 Mobil
+            </button>
+            <button onclick="setCategory('Motor Moge')" data-cat="Motor Moge" class="cat-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition bg-slate-100 text-slate-700 hover:bg-slate-200">
+              🏍️ Moge / Cruiser
+            </button>
+            <button onclick="setCategory('Motor Sport')" data-cat="Motor Sport" class="cat-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition bg-slate-100 text-slate-700 hover:bg-slate-200">
+              🏁 Motor Sport
+            </button>
+          </div>
+
+          <!-- Status & Sort Controls -->
+          <div class="flex flex-wrap items-center gap-2">
+            <!-- Status Filter -->
+            <div class="flex bg-slate-100 p-1 rounded-xl text-xs font-semibold">
+              <button onclick="setStatusFilter('all')" data-status="all" class="status-btn px-2.5 py-1.5 rounded-lg bg-white text-slate-900 shadow-sm transition">
+                Semua
+              </button>
+              <button onclick="setStatusFilter('ready')" data-status="ready" class="status-btn px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition">
+                Ready
+              </button>
+              <button onclick="setStatusFilter('sold')" data-status="sold" class="status-btn px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition">
+                Sold Out
+              </button>
+            </div>
+
+            <!-- Sort Select -->
+            <select id="sortSelect" onchange="renderListings()" class="bg-slate-100 border border-slate-200 text-slate-700 text-xs sm:text-sm font-semibold rounded-xl px-3 py-2 focus:outline-none focus:border-amber-500">
+              <option value="newest">Terbaru</option>
+              <option value="price_asc">Harga Terendah</option>
+              <option value="price_desc">Harga Tertinggi</option>
+              <option value="year_desc">Tahun Termuda</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Katalog Grid -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+      <div class="flex items-center justify-between mb-5">
+        <p class="text-sm text-slate-600">
+          Menampilkan <span id="showingCount" class="font-bold text-slate-900">0</span> unit kendaraan
+        </p>
+        <button onclick="resetFilters()" id="resetFilterBtn" class="hidden text-xs font-bold text-amber-600 hover:text-amber-700 underline">
+          Reset Filter
+        </button>
+      </div>
+
+      <!-- Grid Container -->
+      <div id="listingsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        <!-- Cards injected via JS -->
+      </div>
+
+      <!-- Empty State -->
+      <div id="emptyState" class="hidden text-center py-16 bg-white rounded-2xl border border-slate-200">
+        <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+          🔍
+        </div>
+        <h3 class="text-lg font-bold text-slate-900">Unit tidak ditemukan</h3>
+        <p class="text-sm text-slate-500 mt-1 max-w-md mx-auto">
+          Tidak ada mobil atau motor yang cocok dengan pencarian Anda. Coba kata kunci lain atau tambahkan unit baru.
+        </p>
+        <button onclick="resetFilters()" class="mt-4 bg-slate-900 text-white text-sm font-semibold px-4 py-2 rounded-xl hover:bg-slate-800 transition">
+          Tampilkan Semua Unit
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== VIEW 2: HALAMAN DETAIL UNIT (CARD + SCROLL DETAIL) ==================== -->
+  <main id="detailView" class="hidden flex-1 bg-slate-50 pb-16">
+    <!-- Top Breadcrumb / Back Bar -->
+    <div class="bg-white border-b border-slate-200">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between">
+        <button onclick="showHome()" class="inline-flex items-center gap-2 text-sm font-bold text-slate-700 hover:text-amber-600 transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          <span>Kembali ke Katalog XToys</span>
+        </button>
+        <div id="detailTopActions" class="flex items-center gap-2">
+          <!-- Quick Admin Actions injected here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Detail Content Container -->
+    <div id="detailContent" class="max-w-5xl mx-auto px-4 sm:px-6 pt-6 space-y-6">
+      <!-- Injected dynamically when user clicks a card -->
+    </div>
+  </main>
+
+  <!-- ==================== MODAL: TAMBAH / EDIT UNIT ==================== -->
+  <div id="formModal" class="hidden fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-2xl w-full shadow-2xl border border-slate-200 overflow-hidden my-8">
+      <div class="bg-slate-950 text-white px-6 py-4 flex items-center justify-between">
+        <h2 id="formModalTitle" class="text-lg font-bold">Tambah Unit Baru — XToys</h2>
+        <button onclick="closeFormModal()" class="text-slate-400 hover:text-white">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <form id="unitForm" onsubmit="saveUnit(event)" class="p-6 space-y-4 max-h-[80vh] overflow-y-auto">
+        <input type="hidden" id="unitId" />
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Judul Iklan / Nama Unit *</label>
+            <input type="text" id="unitTitle" required placeholder="Contoh: Harley-Davidson Sportster 48 1200cc" class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Kategori *</label>
+            <select id="unitCategory" required class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500">
+              <option value="Mobil">Mobil</option>
+              <option value="Motor Moge">Motor Moge / Cruiser</option>
+              <option value="Motor Sport">Motor Sport</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Status Ketersediaan *</label>
+            <select id="unitStatus" required class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-bold focus:outline-none focus:border-amber-500">
+              <option value="ready">🟢 READY STOCK</option>
+              <option value="sold">🔴 SOLD OUT (Terjual)</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Harga (Rp) *</label>
+            <input type="number" id="unitPrice" required placeholder="485000000" class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Tahun Perakitan *</label>
+            <input type="number" id="unitYear" required placeholder="2022" class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Odometer / KM *</label>
+            <input type="text" id="unitMileage" required placeholder="4.200 km" class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Transmisi *</label>
+            <input type="text" id="unitTransmission" required placeholder="Manual 6-Speed / Automatic" class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Kapasitas Mesin *</label>
+            <input type="text" id="unitEngine" required placeholder="1.202 cc V-Twin / 2.000 cc Turbo" class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Lokasi Unit *</label>
+            <input type="text" id="unitLocation" required placeholder="Jakarta Selatan / BSD Tangerang" class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Status Surat & Pajak *</label>
+            <input type="text" id="unitPapers" required placeholder="Full Paper (STNK, BPKB, Faktur) Pajak Hidup" class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold uppercase text-slate-600 mb-1">No. WhatsApp Kontak *</label>
+            <input type="text" id="unitWhatsapp" required placeholder="6281234567890" value="6281234567890" class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500" />
+          </div>
+
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-bold uppercase text-slate-600 mb-1">URL Foto Utama *</label>
+            <input type="url" id="unitImage" required placeholder="https://images.unsplash.com/..." class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500" />
+            <p class="text-[11px] text-slate-400 mt-1">Gunakan link gambar dari Unsplash, Imgur, atau folder assets GitHub Anda.</p>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Deskripsi Lengkap & Modifikasi *</label>
+            <textarea id="unitDescription" rows="4" required placeholder="Jelaskan kondisi mesin, ban, part modifikasi, riwayat servis, dll..." class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500"></textarea>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-slate-200 flex items-center justify-end gap-3">
+          <button type="button" onclick="closeFormModal()" class="px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100 transition">
+            Batal
+          </button>
+          <button type="submit" class="px-6 py-2.5 rounded-xl text-sm font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-lg shadow-amber-500/20 transition">
+            Simpan Unit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: KELOLA STOK UNIT ==================== -->
+  <div id="manageModal" class="hidden fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-4xl w-full shadow-2xl border border-slate-200 overflow-hidden my-8">
+      <div class="bg-slate-950 text-white px-6 py-4 flex items-center justify-between">
+        <div>
+          <h2 class="text-lg font-bold">Manajemen Stok Unit XToys</h2>
+          <p class="text-xs text-slate-400">Ubah status Ready/Sold Out, edit detail, atau hapus unit</p>
+        </div>
+        <button onclick="closeManageModal()" class="text-slate-400 hover:text-white">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="p-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+          <button onclick="closeManageModal(); openFormModal();" class="bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs sm:text-sm font-bold px-4 py-2 rounded-xl transition">
+            + Tambah Unit Baru
+          </button>
+          <button onclick="resetToDefaultData()" class="text-xs font-semibold text-rose-600 hover:text-rose-700 border border-rose-200 bg-rose-50 px-3 py-2 rounded-xl transition">
+            Reset Data Awal Showroom
+          </button>
+        </div>
+
+        <div class="overflow-x-auto border border-slate-200 rounded-xl max-h-[60vh]">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-100 text-slate-600 text-xs uppercase border-b border-slate-200">
+                <th class="py-3 px-4">Unit</th>
+                <th class="py-3 px-4">Kategori</th>
+                <th class="py-3 px-4">Harga</th>
+                <th class="py-3 px-4">Status</th>
+                <th class="py-3 px-4 text-right">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="manageTableBody" class="divide-y divide-slate-200 text-sm">
+              <!-- Rows injected via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-950 text-slate-400 border-t border-slate-800 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-amber-500 flex items-center justify-center font-extrabold text-slate-950">
+            X
+          </div>
+          <span class="text-lg font-extrabold text-white">X<span class="text-amber-400">Toys</span></span>
+        </div>
+        <p class="text-xs text-center sm:text-right">
+          &copy; 2026 XToys Automotive & Big Bike Showroom. Jual Beli Mobil, Moge & Motor Sport Terpercaya.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+  <script>
+    const STORAGE_KEY = 'xtoys_showroom_units_v1';
+
+    // Data awal showroom XToys
+    const defaultUnits = [
+      {
+        id: 'xt-1',
+        title: 'Harley-Davidson Sportster Forty-Eight 1200',
+        category: 'Motor Moge',
+        status: 'ready',
+        price: 465000000,
+        year: 2019,
+        mileage: '5.800 km',
+        transmission: 'Manual 5-Speed',
+        engine: '1.202 cc Air-Cooled Evolution V-Twin',
+        location: 'Jakarta Selatan',
+        papers: 'Full Paper Mabua (STNK, BPKB, Faktur) Pajak Hidup',
+        whatsapp: '6281234567890',
+        image: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=1000&q=80',
+        gallery: [
+          'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=1000&q=80',
+          'https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=1000&q=80',
+          'https://images.unsplash.com/photo-1609630875171-b1321377ee65?auto=format&fit=crop&w=1000&q=80'
+        ],
+        description: 'Unit kolektor mulus tanpa cacat. Knalpot Vance & Hines Shortshots dengan suara menggelegar khas V-Twin, Screamin Eagle Heavy Breather air cleaner, jok kulit custom single seat + bonus boncengan. Ban Michelin Scorcher masih tebal 90%. Siap touring maupun nongkrong akhir pekan.'
+      },
+      {
+        id: 'xt-2',
+        title: 'BMW M4 Competition Coupe F82',
+        category: 'Mobil',
+        status: 'ready',
+        price: 1580000000,
+        year: 2018,
+        mileage: '18.400 km',
+        transmission: '7-Speed M-DCT Automatic',
+        engine: '2.979 cc TwinPower Turbo Inline-6',
+        location: 'BSD City, Tangerang',
+        papers: 'BPKB & STNK Lengkap, Plat B Ganjil, Pajak Panjang',
+        whatsapp: '6281234567890',
+        image: 'https://images.unsplash.com/photo-1617531653332-bd46c24f2068?auto=format&fit=crop&w=1000&q=80',
+        gallery: [
+          'https://images.unsplash.com/photo-1617531653332-bd46c24f2068?auto=format&fit=crop&w=1000&q=80',
+          'https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=1000&q=80'
+        ],
+        description: 'BMW M4 Competition asli bukan konversi. Interior Merino Leather hitam dengan sabuk pengaman M-TriColor, atap Carbon Fiber bawaan pabrik, Harman Kardon Sound System, Heads-Up Display, dan knalpot M Performance Exhaust. Cat orisinal terproteksi PPF full body.'
+      },
+      {
+        id: 'xt-3',
+        title: 'Ducati Panigale V4 S Corse',
+        category: 'Motor Sport',
+        status: 'ready',
+        price: 890000000,
+        year: 2021,
+        mileage: '3.100 km',
+        transmission: 'Manual 6-Speed + Ducati Quick Shift',
+        engine: '1.103 cc Desmosedici Stradale V4',
+        location: 'Jakarta Utara',
+        papers: 'Full Paper ATPM Resmi, Kunci 2, Buku Servis Lengkap',
+        whatsapp: '6281234567890',
+        image: 'https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&w=1000&q=80',
+        gallery: [
+          'https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&w=1000&q=80',
+          'https://images.unsplash.com/photo-1614165936126-2ed18e471b3b?auto=format&fit=crop&w=1000&q=80'
+        ],
+        description: 'Superbike flagship dari Bologna. Dilengkapi suspensi elektronik Ohlins Smart EC 2.0, velg Marchesini Forged Aluminium, rem Brembo Stylema, dan full system Akrapovic Titanium exhaust. Tidak pernah jatuh atau turun sirkuit, murni pajangan garasi.'
+      },
+      {
+        id: 'xt-4',
+        title: 'Porsche 911 Carrera S (992)',
+        category: 'Mobil',
+        status: 'sold',
+        price: 3850000000,
+        year: 2021,
+        mileage: '7.200 km',
+        transmission: '8-Speed PDK Automatic',
+        engine: '2.981 cc Twin-Turbo Boxer 6',
+        location: 'Menteng, Jakarta Pusat',
+        papers: 'Full Paper Resmi Eurokars, Faktur & NIK Lengkap',
+        whatsapp: '6281234567890',
+        image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1000&q=80',
+        gallery: [
+          'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1000&q=80'
+        ],
+        description: 'Porsche 911 generasi 992 dengan Sport Chrono Package, Sport Exhaust System, Bose Surround Sound, 14-way Electric Sports Seats, dan velg Carrera Classic 20/21 inch. Riwayat servis resmi Porsche Center Jakarta.'
+      },
+      {
+        id: 'xt-5',
+        title: 'Yamaha YZF-R1M Carbon Edition',
+        category: 'Motor Sport',
+        status: 'ready',
+        price: 745000000,
+        year: 2020,
+        mileage: '4.500 km',
+        transmission: 'Manual 6-Speed + Quickshifter',
+        engine: '998 cc Crossplane Inline-4',
+        location: 'Bandung',
+        papers: 'Full Paper STNK & BPKB Resmi',
+        whatsapp: '6281234567890',
+        image: 'https://images.unsplash.com/photo-1591637333184-19aa84b3e01f?auto=format&fit=crop&w=1000&q=80',
+        gallery: [
+          'https://images.unsplash.com/photo-1591637333184-19aa84b3e01f?auto=format&fit=crop&w=1000&q=80'
+        ],
+        description: 'Varian tertinggi dari keluarga R1 dengan fairing full carbon fiber bawaan pabrik, suspensi Ohlins Electronic Racing Suspension (ERS), Communication Control Unit (CCU) dengan GPS data logger, dan knalpot Austin Racing.'
+      },
+      {
+        id: 'xt-6',
+        title: 'Harley-Davidson Road Glide Special 114',
+        category: 'Motor Moge',
+        status: 'ready',
+        price: 820000000,
+        year: 2020,
+        mileage: '9.100 km',
+        transmission: 'Manual 6-Speed Cruise Drive',
+        engine: '1.868 cc Milwaukee-Eight 114',
+        location: 'Serang, Banten',
+        papers: 'Full Paper Resmi Anak Elang Harley-Davidson',
+        whatsapp: '6281234567890',
+        image: 'https://images.unsplash.com/photo-1558980664-769d59546b3d?auto=format&fit=crop&w=1000&q=80',
+        gallery: [
+          'https://images.unsplash.com/photo-1558980664-769d59546b3d?auto=format&fit=crop&w=1000&q=80'
+        ],
+        description: 'Touring bagger paling nyaman untuk perjalanan jauh lintas pulau. Mesin Milwaukee-Eight 114 bertenaga besar, layar infotainment Boom! Box GTS dengan Apple CarPlay, saddlebag luas, dan knalpot Rinehart Racing.'
+      },
+      {
+        id: 'xt-7',
+        title: 'Toyota GR Yaris 1.6 Turbo AWD',
+        category: 'Mobil',
+        status: 'ready',
+        price: 1120000000,
+        year: 2021,
+        mileage: '6.300 km',
+        transmission: 'Manual 6-Speed iMT',
+        engine: '1.618 cc 3-Cylinder Turbocharged',
+        location: 'Surabaya',
+        papers: 'Full Paper ATPM Toyota Astra Motor (Unit Terbatas)',
+        whatsapp: '6281234567890',
+        image: 'https://images.unsplash.com/photo-1626668893632-6f3a4466d22f?auto=format&fit=crop&w=1000&q=80',
+        gallery: [
+          'https://images.unsplash.com/photo-1626668893632-6f3a4466d22f?auto=format&fit=crop&w=1000&q=80'
+        ],
+        description: 'Homologation special WRC dengan sistem penggerak GR-FOUR All-Wheel Drive, Torsen limited-slip differential depan & belakang, velg BBS Forged 18-inch, dan atap Forged Carbon. Kondisi standar pabrik seperti baru.'
+      },
+      {
+        id: 'xt-8',
+        title: 'Kawasaki Ninja ZX-10R KRT Edition',
+        category: 'Motor Sport',
+        status: 'sold',
+        price: 495000000,
+        year: 2022,
+        mileage: '2.400 km',
+        transmission: 'Manual 6-Speed + KQS',
+        engine: '998 cc Liquid-Cooled Inline-4',
+        location: 'Jakarta Barat',
+        papers: 'Full Paper KMI (Kawasaki Motor Indonesia)',
+        whatsapp: '6281234567890',
+        image: 'https://images.unsplash.com/photo-1580310614729-ccd69652491d?auto=format&fit=crop&w=1000&q=80',
+        gallery: [
+          'https://images.unsplash.com/photo-1580310614729-ccd69652491d?auto=format&fit=crop&w=1000&q=80'
+        ],
+        description: 'Kawasaki Ninja ZX-10R generasi terbaru dengan integrated winglets, layar TFT warna, Electronic Cruise Control, suspensi Showa Balance Free Front Fork, dan knalpot Arrow Pro-Race.'
+      }
+    ];
+
+    let units = [];
+    let currentCategory = 'all';
+    let currentStatusFilter = 'all';
+    let currentSearch = '';
+    let activeDetailId = null;
+
+    // Load data dari localStorage
+    function loadUnits() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try {
+          units = JSON.parse(saved);
+        } catch (e) {
+          units = [...defaultUnits];
+        }
+      } else {
+        units = [...defaultUnits];
+        saveToStorage();
+      }
+    }
+
+    function saveToStorage() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(units));
+      updateStats();
+    }
+
+    function formatRupiah(angka) {
+      return new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        maximumFractionDigits: 0
+      }).format(angka);
+    }
+
+    function updateStats() {
+      const total = units.length;
+      const ready = units.filter(u => u.status === 'ready').length;
+      const sold = units.filter(u => u.status === 'sold').length;
+
+      document.getElementById('statTotal').textContent = total;
+      document.getElementById('statReady').textContent = ready;
+      document.getElementById('statSold').textContent = sold;
+      document.getElementById('totalBadge').textContent = total;
+    }
+
+    // Filter & Search Handlers
+    function setCategory(cat) {
+      currentCategory = cat;
+      document.querySelectorAll('.cat-btn').forEach(btn => {
+        if (btn.dataset.cat === cat) {
+          btn.className = 'cat-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition bg-slate-900 text-white';
+        } else {
+          btn.className = 'cat-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition bg-slate-100 text-slate-700 hover:bg-slate-200';
+        }
+      });
+      renderListings();
+    }
+
+    function setStatusFilter(status) {
+      currentStatusFilter = status;
+      document.querySelectorAll('.status-btn').forEach(btn => {
+        if (btn.dataset.status === status) {
+          btn.className = 'status-btn px-2.5 py-1.5 rounded-lg bg-white text-slate-900 shadow-sm transition';
+        } else {
+          btn.className = 'status-btn px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition';
+        }
+      });
+      renderListings();
+    }
+
+    function handleSearch(val) {
+      currentSearch = val.toLowerCase().trim();
+      document.getElementById('desktopSearch').value = val;
+      document.getElementById('mobileSearch').value = val;
+      if (!document.getElementById('homeView').classList.contains('hidden')) {
+        renderListings();
+      } else {
+        showHome();
+        renderListings();
+      }
+    }
+
+    function resetFilters() {
+      currentCategory = 'all';
+      currentStatusFilter = 'all';
+      currentSearch = '';
+      document.getElementById('desktopSearch').value = '';
+      document.getElementById('mobileSearch').value = '';
+      document.getElementById('sortSelect').value = 'newest';
+      setCategory('all');
+      setStatusFilter('all');
+    }
+
+    // Render Katalog Cards
+    function renderListings() {
+      const grid = document.getElementById('listingsGrid');
+      const emptyState = document.getElementById('emptyState');
+      const resetBtn = document.getElementById('resetFilterBtn');
+      const sortBy = document.getElementById('sortSelect').value;
+
+      if (currentCategory !== 'all' || currentStatusFilter !== 'all' || currentSearch !== '') {
+        resetBtn.classList.remove('hidden');
+      } else {
+        resetBtn.classList.add('hidden');
+      }
+
+      let filtered = units.filter(item => {
+        const matchCat = currentCategory === 'all' || item.category === currentCategory;
+        const matchStatus = currentStatusFilter === 'all' || item.status === currentStatusFilter;
+        const matchSearch =
+          item.title.toLowerCase().includes(currentSearch) ||
+          item.category.toLowerCase().includes(currentSearch) ||
+          item.location.toLowerCase().includes(currentSearch) ||
+          item.engine.toLowerCase().includes(currentSearch);
+        return matchCat && matchStatus && matchSearch;
+      });
+
+      // Sorting
+      if (sortBy === 'price_asc') {
+        filtered.sort((a, b) => a.price - b.price);
+      } else if (sortBy === 'price_desc') {
+        filtered.sort((a, b) => b.price - a.price);
+      } else if (sortBy === 'year_desc') {
+        filtered.sort((a, b) => b.year - a.year);
+      }
+
+      document.getElementById('showingCount').textContent = filtered.length;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+      grid.innerHTML = filtered.map(unit => {
+        const isSold = unit.status === 'sold';
+        return `
+          <div class="group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl hover:border-amber-400/60 transition-all duration-300 flex flex-col">
+            <!-- Image Wrapper -->
+            <div onclick="openDetail('${unit.id}')" class="relative aspect-[4/3] bg-slate-900 overflow-hidden cursor-pointer">
+              <img
+                src="${unit.image}"
+                alt="${unit.title}"
+                onerror="this.src='https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=800&q=80'"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ${isSold ? 'grayscale opacity-75' : ''}"
+              />
+              <!-- Top Badges -->
+              <div class="absolute top-3 left-3 flex items-center gap-1.5">
+                <span class="bg-slate-950/85 backdrop-blur text-white text-[11px] font-bold px-2.5 py-1 rounded-lg">
+                  ${unit.category}
+                </span>
+              </div>
+              <div class="absolute top-3 right-3">
+                ${
+                  isSold
+                    ? `<span class="bg-rose-600 text-white text-[11px] font-extrabold px-2.5 py-1 rounded-lg shadow">SOLD OUT</span>`
+                    : `<span class="bg-emerald-500 text-slate-950 text-[11px] font-extrabold px-2.5 py-1 rounded-lg shadow">READY</span>`
+                }
+              </div>
+
+              ${
+                isSold
+                  ? `<div class="absolute inset-0 bg-slate-950/40 flex items-center justify-center">
+                      <span class="border-2 border-rose-500 text-rose-500 bg-slate-950/90 font-black tracking-widest text-lg px-4 py-1 rounded-lg -rotate-12">TERJUAL</span>
+                    </div>`
+                  : ''
+              }
+            </div>
+
+            <!-- Card Body -->
+            <div onclick="openDetail('${unit.id}')" class="p-4 flex-1 flex flex-col cursor-pointer">
+              <p class="text-lg font-extrabold ${isSold ? 'text-slate-400 line-through' : 'text-slate-900'}">
+                ${formatRupiah(unit.price)}
+              </p>
+              <h3 class="font-bold text-slate-800 text-sm sm:text-base mt-1 line-clamp-2 group-hover:text-amber-600 transition">
+                ${unit.title}
+              </h3>
+
+              <div class="flex items-center gap-2 text-xs text-slate-500 mt-2.5">
+                <span class="bg-slate-100 px-2 py-1 rounded-md font-semibold text-slate-700">${unit.year}</span>
+                <span>•</span>
+                <span>${unit.mileage}</span>
+              </div>
+
+              <div class="mt-auto pt-3 flex items-center justify-between text-xs text-slate-500 border-t border-slate-100">
+                <span class="flex items-center gap-1 truncate">
+                  <svg class="w-3.5 h-3.5 text-amber-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  ${unit.location}
+                </span>
+                <span class="text-amber-600 font-bold shrink-0">Detail &rarr;</span>
+              </div>
+            </div>
+
+            <!-- Quick Admin Bar on Card -->
+            <div class="bg-slate-50 px-3 py-2 border-t border-slate-200 flex items-center justify-between gap-1 text-[11px]">
+              <button
+                onclick="toggleStatus('${unit.id}')"
+                class="font-bold px-2 py-1 rounded-md transition ${
+                  isSold
+                    ? 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
+                    : 'bg-rose-100 text-rose-700 hover:bg-rose-200'
+                }"
+              >
+                ${isSold ? 'Set Ready' : 'Set Sold'}
+              </button>
+              <div class="flex items-center gap-1">
+                <button onclick="openFormModal('${unit.id}')" class="px-2 py-1 rounded-md bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold">
+                  Edit
+                </button>
+                <button onclick="deleteUnit('${unit.id}')" class="px-2 py-1 rounded-md bg-slate-200 hover:bg-rose-600 hover:text-white text-slate-700 font-semibold transition">
+                  Hapus
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ==================== DETAIL VIEW (CARD ATAS + SCROLL DETAIL BAWAH) ====================
+    function openDetail(id) {
+      const unit = units.find(u => u.id === id);
+      if (!unit) return;
+      activeDetailId = id;
+
+      const isSold = unit.status === 'sold';
+      const gallery = unit.gallery && unit.gallery.length > 0 ? unit.gallery : [unit.image];
+      const waMessage = encodeURIComponent(
+        `Halo XToys, saya tertarik dengan unit *${unit.title}* (${unit.year}) seharga *${formatRupiah(unit.price)}*. Apakah unit ini masih tersedia?`
+      );
+      const waLink = `https://wa.me/${unit.whatsapp}?text=${waMessage}`;
+
+      // Top quick admin controls
+      document.getElementById('detailTopActions').innerHTML = `
+        <button onclick="toggleStatus('${unit.id}')" class="text-xs font-bold px-3 py-1.5 rounded-lg border ${
+          isSold ? 'border-emerald-300 bg-emerald-50 text-emerald-700' : 'border-rose-300 bg-rose-50 text-rose-700'
+        }">
+          ${isSold ? 'Ubah ke READY' : 'Tandai SOLD OUT'}
+        </button>
+        <button onclick="openFormModal('${unit.id}')" class="text-xs font-bold px-3 py-1.5 rounded-lg bg-slate-900 text-white hover:bg-slate-800">
+          Edit Unit
+        </button>
+      `;
+
+      // Main Detail Card + Scrollable Details Below
+      document.getElementById('detailContent').innerHTML = `
+        <!-- CARD UTAMA UNIT -->
+        <div class="bg-white rounded-3xl border border-slate-200 shadow-lg overflow-hidden">
+          <div class="grid grid-cols-1 lg:grid-cols-12">
+            <!-- Galeri Foto (Kiri) -->
+            <div class="lg:col-span-7 bg-slate-950 flex flex-col justify-between">
+              <div class="relative aspect-[16/11] w-full overflow-hidden">
+                <img
+                  id="mainDetailImage"
+                  src="${gallery[0]}"
+                  alt="${unit.title}"
+                  class="w-full h-full object-cover ${isSold ? 'grayscale opacity-80' : ''}"
+                />
+                <div class="absolute top-4 left-4 flex gap-2">
+                  <span class="bg-slate-950/85 text-white text-xs font-bold px-3 py-1.5 rounded-xl">
+                    ${unit.category}
+                  </span>
+                  ${
+                    isSold
+                      ? `<span class="bg-rose-600 text-white text-xs font-extrabold px-3 py-1.5 rounded-xl">SOLD OUT</span>`
+                      : `<span class="bg-emerald-500 text-slate-950 text-xs font-extrabold px-3 py-1.5 rounded-xl">READY STOCK</span>`
+                  }
+                </div>
+              </div>
+
+              ${
+                gallery.length > 1
+                  ? `<div class="p-3 bg-slate-900 flex gap-2 overflow-x-auto">
+                      ${gallery
+                        .map(
+                          (img, idx) => `
+                        <button onclick="document.getElementById('mainDetailImage').src='${img}'" class="w-20 h-14 rounded-lg overflow-hidden border-2 border-transparent hover:border-amber-400 focus:border-amber-400 shrink-0">
+                          <img src="${img}" class="w-full h-full object-cover" />
+                        </button>
+                      `
+                        )
+                        .join('')}
+                    </div>`
+                  : ''
+              }
+            </div>
+
+            <!-- Ringkasan Harga & CTA (Kanan) -->
+            <div class="lg:col-span-5 p-6 sm:p-8 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center gap-2 text-xs font-bold text-amber-600 uppercase tracking-wider">
+                  <span>XToys Certified Unit</span>
+                  <span>•</span>
+                  <span>ID #${unit.id}</span>
+                </div>
+
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2 leading-tight">
+                  ${unit.title}
+                </h1>
+
+                <div class="mt-4 p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                  <p class="text-xs text-slate-500 font-semibold">Harga Penawaran</p>
+                  <p class="text-2xl sm:text-3xl font-extrabold ${isSold ? 'text-slate-400 line-through' : 'text-slate-950'} mt-0.5">
+                    ${formatRupiah(unit.price)}
+                  </p>
+                </div>
+
+                <!-- Highlight Specs -->
+                <div class="grid grid-cols-2 gap-3 mt-5 text-sm">
+                  <div class="p-3 rounded-xl bg-slate-50 border border-slate-100">
+                    <p class="text-[11px] text-slate-400 uppercase font-bold">Tahun</p>
+                    <p class="font-bold text-slate-800 mt-0.5">${unit.year}</p>
+                  </div>
+                  <div class="p-3 rounded-xl bg-slate-50 border border-slate-100">
+                    <p class="text-[11px] text-slate-400 uppercase font-bold">Odometer</p>
+                    <p class="font-bold text-slate-800 mt-0.5">${unit.mileage}</p>
+                  </div>
+                  <div class="p-3 rounded-xl bg-slate-50 border border-slate-100">
+                    <p class="text-[11px] text-slate-400 uppercase font-bold">Transmisi</p>
+                    <p class="font-bold text-slate-800 mt-0.5">${unit.transmission}</p>
+                  </div>
+                  <div class="p-3 rounded-xl bg-slate-50 border border-slate-100">
+                    <p class="text-[11px] text-slate-400 uppercase font-bold">Lokasi</p>
+                    <p class="font-bold text-slate-800 mt-0.5">${unit.location}</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CTA Buttons -->
+              <div class="mt-6 pt-5 border-t border-slate-200 space-y-2.5">
+                ${
+                  isSold
+                    ? `<button disabled class="w-full py-3.5 px-5 rounded-xl bg-slate-200 text-slate-500 font-extrabold text-sm cursor-not-allowed">
+                        UNIT SUDAH TERJUAL (SOLD OUT)
+                      </button>`
+                    : `<a href="${waLink}" target="_blank" class="w-full py-3.5 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 transition">
+                        <span>💬 Hubungi XToys via WhatsApp</span>
+                      </a>`
+                }
+                <p class="text-[11px] text-center text-slate-400">
+                  Jadwalkan inspeksi & cek unit langsung di showroom XToys.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SCROLL KE BAWAH: SPESIFIKASI LENGKAP & DESKRIPSI -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <!-- Spesifikasi Teknis & Deskripsi -->
+          <div class="lg:col-span-8 space-y-6">
+            <div class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm">
+              <h2 class="text-lg font-extrabold text-slate-900 border-b border-slate-100 pb-3">
+                Spesifikasi Lengkap Kendaraan
+              </h2>
+              <dl class="divide-y divide-slate-100 text-sm mt-2">
+                <div class="py-3 flex justify-between gap-4">
+                  <dt class="text-slate-500">Kategori</dt>
+                  <dd class="font-bold text-slate-900 text-right">${unit.category}</dd>
+                </div>
+                <div class="py-3 flex justify-between gap-4">
+                  <dt class="text-slate-500">Kapasitas & Tipe Mesin</dt>
+                  <dd class="font-bold text-slate-900 text-right">${unit.engine}</dd>
+                </div>
+                <div class="py-3 flex justify-between gap-4">
+                  <dt class="text-slate-500">Transmisi</dt>
+                  <dd class="font-bold text-slate-900 text-right">${unit.transmission}</dd>
+                </div>
+                <div class="py-3 flex justify-between gap-4">
+                  <dt class="text-slate-500">Tahun Perakitan</dt>
+                  <dd class="font-bold text-slate-900 text-right">${unit.year}</dd>
+                </div>
+                <div class="py-3 flex justify-between gap-4">
+                  <dt class="text-slate-500">Jarak Tempuh (Odometer)</dt>
+                  <dd class="font-bold text-slate-900 text-right">${unit.mileage}</dd>
+                </div>
+                <div class="py-3 flex justify-between gap-4">
+                  <dt class="text-slate-500">Kelengkapan Surat & Pajak</dt>
+                  <dd class="font-bold text-slate-900 text-right">${unit.papers}</dd>
+                </div>
+                <div class="py-3 flex justify-between gap-4">
+                  <dt class="text-slate-500">Lokasi Unit</dt>
+                  <dd class="font-bold text-slate-900 text-right">${unit.location}</dd>
+                </div>
+              </dl>
+            </div>
+
+            <div class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm">
+              <h2 class="text-lg font-extrabold text-slate-900 border-b border-slate-100 pb-3">
+                Deskripsi Kondisi & Modifikasi
+              </h2>
+              <p class="text-slate-700 text-sm sm:text-base leading-relaxed mt-4 whitespace-pre-line">
+                ${unit.description}
+              </p>
+            </div>
+          </div>
+
+          <!-- Info Showroom XToys -->
+          <div class="lg:col-span-4 space-y-6">
+            <div class="bg-slate-950 text-white rounded-3xl p-6 shadow-lg">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-2xl bg-amber-500 text-slate-950 font-black text-2xl flex items-center justify-center">
+                  X
+                </div>
+                <div>
+                  <h3 class="font-extrabold text-lg">XToys Showroom</h3>
+                  <p class="text-xs text-amber-400 font-semibold">Verified Automotive Dealer</p>
+                </div>
+              </div>
+              <ul class="mt-5 space-y-2.5 text-xs text-slate-300">
+                <li class="flex items-center gap-2">✅ Garansi Keabsahan Dokumen (STNK/BPKB/Faktur)</li>
+                <li class="flex items-center gap-2">✅ Bebas Tabrak & Bebas Banjir</li>
+                <li class="flex items-center gap-2">✅ Melayani Tukar Tambah & Pengiriman Towing</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('homeView').classList.add('hidden');
+      document.getElementById('detailView').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showHome() {
+      activeDetailId = null;
+      document.getElementById('detailView').classList.add('hidden');
+      document.getElementById('homeView').classList.remove('hidden');
+      renderListings();
+    }
+
+    // ==================== CRUD: TAMBAH, EDIT, HAPUS, UBAH STATUS ====================
+    function openFormModal(id = null) {
+      const modal = document.getElementById('formModal');
+      const form = document.getElementById('unitForm');
+      const titleEl = document.getElementById('formModalTitle');
+
+      form.reset();
+      document.getElementById('unitId').value = '';
+
+      if (id) {
+        const unit = units.find(u => u.id === id);
+        if (unit) {
+          titleEl.textContent = 'Edit Unit — ' + unit.title;
+          document.getElementById('unitId').value = unit.id;
+          document.getElementById('unitTitle').value = unit.title;
+          document.getElementById('unitCategory').value = unit.category;
+          document.getElementById('unitStatus').value = unit.status;
+          document.getElementById('unitPrice').value = unit.price;
+          document.getElementById('unitYear').value = unit.year;
+          document.getElementById('unitMileage').value = unit.mileage;
+          document.getElementById('unitTransmission').value = unit.transmission;
+          document.getElementById('unitEngine').value = unit.engine;
+          document.getElementById('unitLocation').value = unit.location;
+          document.getElementById('unitPapers').value = unit.papers;
+          document.getElementById('unitWhatsapp').value = unit.whatsapp;
+          document.getElementById('unitImage').value = unit.image;
+          document.getElementById('unitDescription').value = unit.description;
+        }
+      } else {
+        titleEl.textContent = 'Tambah Unit Baru — XToys';
+      }
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeFormModal() {
+      document.getElementById('formModal').classList.add('hidden');
+    }
+
+    function saveUnit(e) {
+      e.preventDefault();
+      const id = document.getElementById('unitId').value;
+      const imageUrl = document.getElementById('unitImage').value.trim();
+
+      const unitData = {
+        id: id || 'xt-' + Date.now(),
+        title: document.getElementById('unitTitle').value.trim(),
+        category: document.getElementById('unitCategory').value,
+        status: document.getElementById('unitStatus').value,
+        price: Number(document.getElementById('unitPrice').value),
+        year: Number(document.getElementById('unitYear').value),
+        mileage: document.getElementById('unitMileage').value.trim(),
+        transmission: document.getElementById('unitTransmission').value.trim(),
+        engine: document.getElementById('unitEngine').value.trim(),
+        location: document.getElementById('unitLocation').value.trim(),
+        papers: document.getElementById('unitPapers').value.trim(),
+        whatsapp: document.getElementById('unitWhatsapp').value.trim(),
+        image: imageUrl,
+        gallery: [imageUrl],
+        description: document.getElementById('unitDescription').value.trim()
+      };
+
+      if (id) {
+        const index = units.findIndex(u => u.id === id);
+        if (index !== -1) {
+          // Pertahankan galeri tambahan jika foto utama tidak berubah
+          if (units[index].image === imageUrl && units[index].gallery) {
+            unitData.gallery = units[index].gallery;
+          }
+          units[index] = unitData;
+        }
+      } else {
+        units.unshift(unitData);
+      }
+
+      saveToStorage();
+      closeFormModal();
+      renderListings();
+      renderManageTable();
+
+      if (activeDetailId === unitData.id) {
+        openDetail(unitData.id);
+      }
+    }
+
+    function toggleStatus(id) {
+      const unit = units.find(u => u.id === id);
+      if (!unit) return;
+      unit.status = unit.status === 'ready' ? 'sold' : 'ready';
+      saveToStorage();
+      renderListings();
+      renderManageTable();
+
+      if (activeDetailId === id) {
+        openDetail(id);
+      }
+    }
+
+    function deleteUnit(id) {
+      const unit = units.find(u => u.id === id);
+      if (!unit) return;
+      if (confirm(`Hapus unit "${unit.title}" dari XToys?`)) {
+        units = units.filter(u => u.id !== id);
+        saveToStorage();
+        renderListings();
+        renderManageTable();
+        if (activeDetailId === id) {
+          showHome();
+        }
+      }
+    }
+
+    // Modal Kelola Stok
+    function openManageModal() {
+      renderManageTable();
+      document.getElementById('manageModal').classList.remove('hidden');
+    }
+
+    function closeManageModal() {
+      document.getElementById('manageModal').classList.add('hidden');
+    }
+
+    function renderManageTable() {
+      const tbody = document.getElementById('manageTableBody');
+      tbody.innerHTML = units
+        .map(unit => {
+          const isSold = unit.status === 'sold';
+          return `
+            <tr class="hover:bg-slate-50">
+              <td class="py-3 px-4">
+                <div class="flex items-center gap-3">
+                  <img src="${unit.image}" class="w-12 h-9 rounded-lg object-cover bg-slate-200 shrink-0" />
+                  <div>
+                    <p class="font-bold text-slate-900 line-clamp-1">${unit.title}</p>
+                    <p class="text-xs text-slate-500">${unit.year} • ${unit.location}</p>
+                  </div>
+                </div>
+              </td>
+              <td class="py-3 px-4 text-xs font-semibold text-slate-600">${unit.category}</td>
+              <td class="py-3 px-4 font-bold text-slate-800 whitespace-nowrap">${formatRupiah(unit.price)}</td>
+              <td class="py-3 px-4">
+                <button
+                  onclick="toggleStatus('${unit.id}')"
+                  class="text-xs font-extrabold px-2.5 py-1 rounded-lg ${
+                    isSold ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700'
+                  }"
+                >
+                  ${isSold ? 'SOLD OUT' : 'READY'}
+                </button>
+              </td>
+              <td class="py-3 px-4 text-right whitespace-nowrap space-x-1">
+                <button onclick="closeManageModal(); openFormModal('${unit.id}');" class="text-xs font-bold px-2.5 py-1.5 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-800">
+                  Edit
+                </button>
+                <button onclick="deleteUnit('${unit.id}')" class="text-xs font-bold px-2.5 py-1.5 rounded-lg bg-rose-100 hover:bg-rose-600 hover:text-white text-rose-700 transition">
+                  Hapus
+                </button>
+              </td>
+            </tr>
+          `;
+        })
+        .join('');
+    }
+
+    function resetToDefaultData() {
+      if (confirm('Kembalikan semua data unit XToys ke pengaturan awal?')) {
+        units = [...defaultUnits];
+        saveToStorage();
+        renderListings();
+        renderManageTable();
+      }
+    }
+
+    // Init App
+    loadUnits();
+    updateStats();
+    renderListings();
+  </script>
+</body>
+</html>
